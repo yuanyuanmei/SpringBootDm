@@ -18,6 +18,7 @@
         <druid.version>1.1.10</druid.version>
         <validator.version>5.3.4.Final</validator.version>
         <pageHelper.version>5.1.8</pageHelper.version>
+        <poi.version>3.17</poi.version>
     </properties>
 
     <parent>
@@ -145,6 +146,13 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.4</version>
+        </dependency>
+
+        <!--poi-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
         </dependency>
 
     </dependencies>

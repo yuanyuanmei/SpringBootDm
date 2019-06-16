@@ -53,6 +53,7 @@ public class ConfigShiro {
             map.put("/logout","logout");
             map.put("/user/login","anon");
             map.put("/user/register","anon");
+            map.put("/excel","anon");
             map.put("/swagger-ui.html","anon");
             map.put("/swagger-resources/**","anon");
             //对所有用户认证
