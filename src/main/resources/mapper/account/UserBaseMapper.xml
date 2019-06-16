@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.account.dao.UserBaseDao">
+
+    <resultMap id="BaseMap" type="UserBaseBean">
+        <!--id等表关联重名字段需给别名-->
+        <result column="user_base_id" property="id"/>
+        <!--column是数据库查询中的参数值，不一定是外键-->
+        <collection property="roleBeans" ofType="SysRoleBean" column="user_base_id"
+                    select="com.example.account.dao.SysRoleDao.getRolesByUserId"/>
+    </resultMap>
+    <sql id="BaseColumns">
+        id as user_base_id,create_time,email,header_url,is_delete,phone,type,update_time,username,nickname
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseMap" parameterType="java.lang.Long">
+        select
+        <include refid="BaseColumns"/>
+        from account_user_base
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseMap" parameterType="UserBaseBean">
+        select
+        <include refid="BaseColumns"/>
+        from account_user_base
+        order by id asc
+    </select>
+
+    <insert id="insert" parameterType="UserBaseBean" keyProperty="id">
+        insert into account_user_base
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="headerUrl != null">
+                header_url,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="deleteStatus != null">
+                is_delete,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="headerUrl != null">
+                #{headerUrl},
+            </if>
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="nickname != null">
+                #{nickname},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="UserBaseBean">
+        update account_user_base
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="headerUrl != null">
+                header_url = #{headerUrl},
+            </if>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="deleteStatus != null">
+                is_delete = #{deleteStatus},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update account_user_base set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

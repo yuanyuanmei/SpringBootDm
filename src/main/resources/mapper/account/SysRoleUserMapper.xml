@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.account.dao.SysRoleUserDao">
+
+    <sql id="BaseColumns">
+        user_id,role_id
+    </sql>
+
+    <select id="selectByPrimaryKey" resultType="SysRoleUserBean" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role_user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="list" resultType="SysRoleUserBean" parameterType="SysRoleUserBean">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role_user
+    </select>
+
+    <insert id="insert" parameterType="SysRoleUserBean">
+        insert into account_sys_role_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="roleId != null">
+                #{roleId},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="SysRoleUserBean">
+        update account_sys_role_user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update account_sys_role_user set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

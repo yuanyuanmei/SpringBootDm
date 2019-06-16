@@ -1,0 +1,54 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/account_system?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: sa
+
+  redis:
+    # Redis服务器地址(本地服务器和线上服务器)
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器连接密码（默认为空）
+    # password:
+    # 连接池最大连接数（使用负值表示没有限制）
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）
+    timeout: 5000ms
+
+  devtools:
+    restart:
+      enabled: true
+
+mybatis:
+  type-aliases-package: com.example.*.beans
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    use-generated-keys: true
+    use-column-label: true
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+
+
+
+logging:
+  level:
+    com.example.*.dao : debug
+
+server:
+  port: 2580

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.account.dao.UserAccountDao">
+
+    <resultMap id="BaseMap" type="UserAccountBean">
+        <result column="user_account_id" property="id" />
+        <association property="userBaseBean" column="user_id" javaType="UserBaseBean"
+                     select="com.example.account.dao.UserBaseDao.selectByPrimaryKey"/>
+    </resultMap>
+
+    <sql id="BaseColumns">
+        id as user_account_id
+        ,account
+        ,type
+        ,create_time
+        ,is_delete as deleteStatus
+        ,last_login_ip
+        ,last_login_time
+        ,open_pwd
+        ,password as password
+        ,salt
+        ,update_time
+        ,user_id
+    </sql>
+
+    <!--根据ID查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseMap" parameterType="java.lang.Long">
+        select
+        <include refid="BaseColumns"/>
+        from account_user_account
+        <where>
+            id = #{id}
+            and is_delete = 1
+        </where>
+
+    </select>
+
+    <!--根据帐号查询-->
+    <select id="findByAccount" resultMap="BaseMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumns"/>
+        from account_user_account
+        <where>
+            account = #{account}
+            and is_delete = 1
+        </where>
+    </select>
+
+    <select id="list" resultType="UserAccountBean" parameterType="UserAccountBean">
+        select
+        <include refid="BaseColumns"/>
+        from account_user_account
+    </select>
+
+    <insert id="insert" parameterType="UserAccountBean" keyProperty="id">
+        insert into account_user_account
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="account != null">
+                account,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="deleteStatus != null">
+                is_delete,
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="openPwd != null">
+                open_pwd,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="account != null">
+                #{account},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus},
+            </if>
+            <if test="lastLoginIp != null">
+                #{lastLoginIp},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime},
+            </if>
+            <if test="openPwd != null">
+                #{openPwd},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="salt != null">
+                #{salt},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="UserAccountBean">
+        update account_user_account
+        <set>
+            <if test="account != null">
+                account = #{account},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="deleteStatus != null">
+                is_delete = #{deleteStatus},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="openPwd != null">
+                open_pwd = #{openPwd},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="salt != null">
+                salt = #{salt},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Long">
+        update account_user_account set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

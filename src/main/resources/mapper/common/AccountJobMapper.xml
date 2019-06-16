@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.common.dao.AccountJobDao">
+
+    <sql id="BaseColumns">
+        id,job_name,description,cron,spring_bean_name,method_name,is_sys_job,status,create_time,update_time,is_delete
+    </sql>
+
+    <select id="selectByPrimaryKey" resultType="com.example.common.dto.JobDto" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumns"/>
+        from account_job
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="getByName" resultType="com.example.common.dto.JobDto" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumns"/>
+        from account_job
+        <where>
+            job_name = #{jobName}
+        </where>
+    </select>
+
+    <select id="list" resultType="com.example.common.dto.JobDto" parameterType="com.example.common.dto.JobDto">
+        select
+        <include refid="BaseColumns"/>
+        from account_job
+    </select>
+
+    <insert id="insert" parameterType="com.example.common.dto.JobDto" keyProperty="id">
+        insert into account_job
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                id,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="cron != null">
+                cron,
+            </if>
+            <if test="springBeanName != null">
+                spring_bean_name,
+            </if>
+            <if test="methodName != null">
+                method_name,
+            </if>
+            <if test="ysJobStatus != null">
+                is_sys_job,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="jobName != null">
+                #{jobName},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="cron != null">
+                #{cron},
+            </if>
+            <if test="springBeanName != null">
+                #{springBeanName},
+            </if>
+            <if test="methodName != null">
+                #{methodName},
+            </if>
+            <if test="isSysJob != null">
+                #{isSysJob},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.example.common.dto.JobDto">
+        update account_job
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="cron != null">
+                cron = #{cron},
+            </if>
+            <if test="springBeanName != null">
+                spring_bean_name = #{springBeanName},
+            </if>
+            <if test="methodName != null">
+                method_name = #{methodName},
+            </if>
+            <if test="isSysJob != null">
+                is_sys_job = #{isSysJob},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                updateTime = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update account_job set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

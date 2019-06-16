@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.account.dao.SysRolePermissionDao">
+
+    <sql id="BaseColumns">
+        role_id,permission_id
+    </sql>
+
+    <select id="selectByPrimaryKey" resultType="SysRolePermissionBean" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role_permission
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="list" resultType="SysRolePermissionBean" parameterType="SysRolePermissionBean">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role_permission
+    </select>
+
+    <insert id="insert" parameterType="SysRolePermissionBean">
+        insert into account_sys_role_permission
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="permissionId != null">
+                permission_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="roleId != null">
+                #{roleId},
+            </if>
+            <if test="permissionId != null">
+                #{permissionId},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="SysRolePermissionBean">
+        update account_sys_role_permission
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="permissionId != null">
+                permission_id = #{permissionId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update account_sys_role_permission set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

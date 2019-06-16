@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.account.dao.SysRoleDao">
+
+    <resultMap id="BaseMap" type="SysRoleBean">
+        <result column="sys_role_id" property="id" />
+        <!--column是数据库查询中的参数值，不一定是外键-->
+        <collection property="permissionBeans" ofType="SysPermissionBean" column="sys_role_id" fetchType="lazy"
+                    select="com.example.account.dao.SysPermissionDao.getPermissionsByRoleId"/>
+    </resultMap>
+    <sql id="BaseColumns">
+        account_sys_role.id as sys_role_id,
+        account_sys_role.name,
+        account_sys_role.desc,
+        account_sys_role.create_time,
+        account_sys_role.update_time,
+        account_sys_role.is_delete
+    </sql>
+
+    <select id="getRolesByUserId" resultMap="BaseMap" parameterType="java.lang.Long">
+        select
+        <include refid="BaseColumns" />
+        from account_sys_role
+        left join account_sys_role_user on account_sys_role.id = account_sys_role_user.role_id
+        <where>
+            account_sys_role_user.user_id = #{userId}
+            and account_sys_role.is_delete = 1
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseMap" parameterType="SysRoleBean">
+        select
+        <include refid="BaseColumns"/>
+        from account_sys_role
+    </select>
+
+    <insert id="insert" parameterType="SysRoleBean" keyProperty="id">
+        insert into account_sys_role
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="desc != null">
+                desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                is_delete,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="desc != null">
+                #{desc},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="SysRoleBean">
+        update account_sys_role
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="desc != null">
+                desc = #{desc},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteStatus != null">
+                is_delete = #{deleteStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update account_sys_role set is_delete = 2
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>
