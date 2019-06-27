@@ -1,5 +1,7 @@
 package com.example.common.base;
 
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 /**
@@ -13,7 +15,11 @@ public interface BaseDao<T> {
      * @param id
      * @return
      */
+
     T selectByPrimaryKey(Long id);
+
+    @SelectProvider(method = "selectByPrimaryKey", type = BaseSqlProvider.class)
+    T selectByPrimaryKey123(T t);
 
     /**
      * 软删除
@@ -22,11 +28,16 @@ public interface BaseDao<T> {
      */
     int delete(Long id);
 
+
+    @DeleteProvider(method = "delete", type = BaseSqlProvider.class)
+    int delete123(T t);
     /**
      * 单表新增
      * @param t
      * @return
      */
+    @InsertProvider(method = "insert", type=BaseSqlProvider.class)
+    @Options(useGeneratedKeys = true)
     int insert(T t);
 
     /**
@@ -34,6 +45,7 @@ public interface BaseDao<T> {
      * @param t
      * @return
      */
+    @UpdateProvider(method = "update", type = BaseSqlProvider.class)
     int update(T t);
 
     /**
