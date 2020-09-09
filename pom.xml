@@ -16,7 +16,7 @@
         <swagger.version>2.8.0</swagger.version>
         <mybatis.version>1.3.2</mybatis.version>
         <druid.version>1.1.10</druid.version>
-        <validator.version>5.3.4.Final</validator.version>
+        <validator.version>5.3.6.Final</validator.version>
         <pageHelper.version>5.1.8</pageHelper.version>
         <poi.version>3.17</poi.version>
     </properties>
