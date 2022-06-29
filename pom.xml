@@ -18,7 +18,7 @@
         <druid.version>1.1.10</druid.version>
         <validator.version>5.3.4.Final</validator.version>
         <pageHelper.version>5.1.8</pageHelper.version>
-        <poi.version>3.17</poi.version>
+        <poi.version>4.1.1</poi.version>
     </properties>
 
     <parent>
